@@ -1,0 +1,21 @@
+shabdamegha package
+===================
+
+Submodules
+----------
+
+shabdamegha.shabdamegha module
+------------------------------
+
+.. automodule:: shabdamegha.shabdamegha
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: shabdamegha
+   :members:
+   :undoc-members:
+   :show-inheritance:
