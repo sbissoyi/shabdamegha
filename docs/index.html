@@ -41,7 +41,9 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <!-- Local TOC -->
-              <div class="local-toc"><ul>
+              <div class="local-toc">
+                <img src="shabdamegha.png"/>  
+              <ul>
 <li><a class="reference internal" href="#">Welcome to Shabdamegha’s documentation!</a><ul>
 <li><a class="reference internal" href="#shabdamegha.shabdamegha.draw_shabdamegha"><code class="docutils literal notranslate"><span class="pre">draw_shabdamegha()</span></code></a></li>
 </ul>
@@ -72,9 +74,22 @@
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+            
   <section id="module-shabdamegha.shabdamegha">
 <span id="welcome-to-shabdamegha-s-documentation"></span><h1>Welcome to Shabdamegha’s documentation!<a class="headerlink" href="#module-shabdamegha.shabdamegha" title="Permalink to this heading"></a></h1>
+<h2>About</h2>
+<p>`Shabdamegha` is a python library to generate word cloud for Odia language with proper rendering of Ligatures (Yuktakshars). (ଯୁକ୍ତାକ୍ଷର ଗୁଡ଼ିକୁ ସଠିକ୍‌ ପ୍ରଦର୍ଶିତ କରି ଶବ୍ଦମେଘ ସୃଷ୍ଟି କରିବା ନିମନ୍ତେ ଏକ ପାଇଥନ୍‌ ଲାଇବ୍ରେରୀ)</p>
+<h2>Features</h2>
+<p><ul>
+<li>Support for Yuktakshar rendering.</li>
+<li>Flexible customization of font, color, orientation, and placement.</li>
+<li>Expandable canvas for dynamic word placement.</li>
+</ul></p>
+<h2>Installation</h2>
+<p><pre>pip install shabdamegha</pre></p>
+<h2>Usage</h2>
+<p><pre>from shabdamegha.shabdamegha import draw_shabdamegha</pre></p>
+<h2>API Documentation</h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="shabdamegha.shabdamegha.draw_shabdamegha">
 <span class="sig-prename descclassname"><span class="pre">shabdamegha.shabdamegha.</span></span><span class="sig-name descname"><span class="pre">draw_shabdamegha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_file_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'wordcloud.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_RGBA_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(255,</span> <span class="pre">255,</span> <span class="pre">255,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expanding_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">90]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#shabdamegha.shabdamegha.draw_shabdamegha" title="Permalink to this definition"></a></dt>
@@ -117,8 +132,10 @@ Defaults to <cite>True</cite>.</p></li>
 <dt>Saves:</dt><dd><p>The word cloud image to the specified <cite>save_file_path</cite>.</p>
 </dd>
 </dl>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">draw_shabdamegha</span><span class="p">(</span>
+<h2>Example</h2>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">from shabdamegha.shabdamegha import draw_shabdamegha</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">draw_shabdamegha</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">data</span><span class="o">=</span><span class="s2">&quot;ଶ୍ରୀଜଗନ୍ନାଥ ଓଡ଼ିଶା ଦୁର୍ଗାପୂଜା କଟକ ପୁରୀ ଭୁବନେଶ୍ୱର ନବରଙ୍ଗପୁର କୋରାପୁଟ ମୟୂରଭଞ୍ଜ&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">save_file_path</span><span class="o">=</span><span class="s2">&quot;example_wordcloud.png&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">orientations</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="o">-</span><span class="mi">60</span><span class="p">,</span> <span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
