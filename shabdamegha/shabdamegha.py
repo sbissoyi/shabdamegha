@@ -29,22 +29,22 @@ def _get_font_paths():
     return font_paths
 
 def _get_platform_specific_paddding():
-    platform_specific_paddding = 0
+    platform_specific_padding_and_fontfactor = (0,0)
     system_platform = platform.system().lower()
     
     if system_platform == 'darwin':  # macOS
-        platform_specific_paddding = 15
+        platform_specific_padding_and_fontfactor = (15,64)
     elif system_platform == 'windows':  # Windows
-        platform_specific_paddding = 0
+        platform_specific_padding_and_fontfactor = (0,64)
     elif system_platform == 'linux':  # Linux (Ubuntu, etc.)
-        platform_specific_paddding = 30
+        platform_specific_padding_and_fontfactor = (10,54)
 
-    return platform_specific_paddding
+    return platform_specific_padding_and_fontfactor
 
 
 
 # Function to render text using HarfBuzz and FreeType
-def _render_text(text, font_path, font_size, color, platform_specific_paddding):
+def _render_text(text, font_path, font_size, color, platform_specific_padding_and_fontfactor):
     """
     Renders text using HarfBuzz and FreeType.
 
@@ -53,16 +53,19 @@ def _render_text(text, font_path, font_size, color, platform_specific_paddding):
         font_path (str): The file path to the font.
         font_size (int): The size of the font in points.
         color (tuple): A tuple of RGB values (0-255) representing the text color.
-        platform_specific_paddding (int): Platform specific padding in pixels.
+        platform_specific_padding_and_fontfactor (tuple): Platform specific padding in pixels and font factor
 
     Returns:
         PIL.Image.Image: The rendered text as a PIL image.
         None: If an error occurs during rendering.
     """
     try:
+        extra_padding = platform_specific_padding_and_fontfactor[0]
+        font_factor = platform_specific_padding_and_fontfactor[1]
+
         # Load font
         face = freetype.Face(font_path)
-        face.set_char_size(font_size * 64)
+        face.set_char_size(font_size * font_factor)
 
         # Initialize HarfBuzz
         with open(font_path, "rb") as font_file:
@@ -88,12 +91,12 @@ def _render_text(text, font_path, font_size, color, platform_specific_paddding):
             bottom = bitmap.rows - top
             max_top = max(max_top, top)
             max_bottom = max(max_bottom, bottom)
-            total_width += pos.x_advance // 64
+            total_width += pos.x_advance // font_factor
 
         canvas_width, canvas_height = total_width, max_top + max_bottom
         
-        text_image = Image.new("RGBA", (canvas_width+platform_specific_paddding, canvas_height), (255, 255, 255, 0))
-        #text_image = Image.new("RGBA", (canvas_width+platform_specific_paddding, canvas_height), (0, 0, 0, 255)) #black background
+        text_image = Image.new("RGBA", (canvas_width + extra_padding, canvas_height), (255, 255, 255, 0))
+        #text_image = Image.new("RGBA", (canvas_width + extra_padding, canvas_height), (0, 0, 0, 255)) #black background
 
         pen_x, pen_y = 0, max_top
         for info, pos in zip(buf.glyph_infos, buf.glyph_positions):
@@ -103,7 +106,7 @@ def _render_text(text, font_path, font_size, color, platform_specific_paddding):
 
             # Skip empty glyphs
             if bitmap.width == 0 or bitmap.rows == 0:
-                pen_x += pos.x_advance // 64
+                pen_x += pos.x_advance // font_factor
                 continue
 
             # Create transparent glyph
@@ -116,7 +119,7 @@ def _render_text(text, font_path, font_size, color, platform_specific_paddding):
 
             # Paste glyph into the text image
             text_image.paste(transparent_glyph, (pen_x + face.glyph.bitmap_left, pen_y - face.glyph.bitmap_top), transparent_glyph)
-            pen_x += pos.x_advance // 64
+            pen_x += pos.x_advance // font_factor
 
         return text_image
 
@@ -230,7 +233,7 @@ def draw_shabdamegha(   data,
     if font_file_paths is None:
         font_file_paths = _get_font_paths()
 
-    platform_specific_paddding = _get_platform_specific_paddding()
+    platform_specific_padding_and_fontfactor = _get_platform_specific_paddding()
 
     image_width, image_height = initial_width, initial_height
 
@@ -262,7 +265,7 @@ def draw_shabdamegha(   data,
 
             orientation = secrets.choice(orientations)
 
-            rendered_text = _render_text(word, font_path, font_size, color, platform_specific_paddding)
+            rendered_text = _render_text(word, font_path, font_size, color, platform_specific_padding_and_fontfactor)
             if rendered_text is None:
                 continue
 
