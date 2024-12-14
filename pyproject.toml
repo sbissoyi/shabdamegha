@@ -1,6 +1,6 @@
 [project]
 name = "shabdamegha"
-version = "0.1.6"
+version = "0.1.7"
 
 [project.urls]
 Documentation = "https://sbissoyi.github.io/shabdamegha/docs"
